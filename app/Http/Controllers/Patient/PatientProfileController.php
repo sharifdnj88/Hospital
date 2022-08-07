@@ -99,71 +99,102 @@ class PatientProfileController extends Controller
     }
 
 
-    //  Forgot Password
-    public function PatientForgotUpdate(Request $request, $id)
+
+    // Management Forgot Page View
+    public function ShowForgotPassword()
     {
-        // Validate
+        return view('patient.forgot');
+    }
+
+    public function ForgotPassword(Request $request)
+    {
         $this -> validate($request, [
-            'email'         =>'required',
-            'password'    =>'required|confirmed'
+            'email'     =>'required|email'
         ]);
 
-        $for = patient::where('email', $request -> email) -> first();
+        $manage_data = patient::where('email', $request -> email) -> first();
+        $staff_data = doctor::where('email', $request -> email) -> first();
 
-        if( $for ){
-            // return redirect() -> route('forgot.password.change');
+        if( $manage_data ){
+            $token = md5( time(). rand() );
+            $manage_data ->update([
+                'access_token'  => $token
+            ]);
+            $manage_data ->notify(new PatientForgotPasswordNotification($manage_data));
+            return redirect() -> route('login.page') -> with('success', 'Please check your email & Click the Link'); 
+        }elseif( $staff_data ){
+            $token = md5( time(). rand() );
+            $staff_data ->update([
+                'access_token'  => $token
+            ]);
+            $staff_data ->notify(new DoctorForgotPasswordNotification($staff_data));
+            return redirect() -> route('login.page') -> with('success', 'Please check your email & Click the Link'); 
         }else{
             return back() -> with('danger', 'We can not find your email. Please enter your valid email');
         }
 
-         //   Create a token
-
-         $token = md5( time(). rand() );
-
-         $patient_update = patient::findOrFail($id);
-         $patient_update ->update([
-             'password'       => password_hash($request -> password, PASSWORD_DEFAULT),
-             'access_token'   => $token,
-         ]);
-
-          //   Send Account Activation link
-          $patient_update -> notify( new PatientForgotPasswordNotification($patient_update) );
-
-          return redirect() -> route('login.page') -> with('success', 'Check your email address & click the link');
 
 
     }
 
-     //  Patient Forgot Account Notification
-     public function PatientForgotPasswordNotification($token = null)
-     {
-         //  Check Token
-         if( !$token ){
-             return redirect() -> route('login.page') -> with('danger',  'Access token not found');
-         }
- 
- 
-         //  Check Token
-         if( $token ){
-             
-             $patient_update = patient::where('access_token', $token) -> first();
- 
-             if( $patient_update ){
- 
-                 $patient_update ->update([
-                     'access_token'  =>NULL,
-                     'status'           =>true
-                 ]);
- 
-                 return redirect() -> route('login.page') -> with('success', 'Hi '.$patient_update-> name . ' Your account forgot password successfully change. Now Login');
-             }else{
-                 return redirect() -> route('login.page') -> with('warning',  'Access token not match');
-             }
- 
-         }
-     }
+    //  Reset Password Link
+    public function ResetPasswordLink($token =null, $email =null)
+    {
+        if( !$token && !$email ){
+            return redirect() -> route('login.page') -> with('danger', 'Acces token or Email not found');
+        }
+        
+        if( $token && $email ){
+            $manage_data = patient::where('access_token', $token) -> first();
+            $manag_data_email = patient::where('email', $email) -> first();
+            $staff_data = doctor::where('access_token', $token) -> first();
+            $staf_data_email = doctor::where('email', $email) -> first();
+
+            if( $manage_data && $manag_data_email || $staff_data && $staf_data_email ){
+                return view('patient.reset', compact('email'));
+
+            }else{
+                return redirect() -> route('login.page') -> with('danger', 'Acces token or Email not match');
+            }
+
+        }
+
+    }
+
+    public function ResetPassword(Request $request)
+    {
+        $this -> validate($request, [
+            'password'    =>'required|confirmed'
+        ]);
+
+        $manage_data = patient::where('email', $request -> email) -> first();
+        $staff_data = doctor::where('email', $request -> email) -> first();
+
+        if( $manage_data ){
+            $manage_data ->update([
+                'access_token'  => null,
+                'password'      => Hash::make( $request -> password )
+            ]);
+            return redirect() -> route('login.page') -> with('success', 'Your Password Change'); 
+        }else{
+            $staff_data ->update([
+                'access_token'  => null,
+                'password'      => Hash::make( $request -> password )
+            ]);
+            return redirect() -> route('login.page') -> with('success', 'Your Password Change'); 
+        }
+
+         
 
 
+    }
+
+
+
+
+
+
+    
 
 
 }

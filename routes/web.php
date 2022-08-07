@@ -30,15 +30,6 @@ Route::get('/patient-logout', [AuthController::class, 'logout']) ->name('patient
 //  Patient Login Notification
 Route::get('/patient_account_activation/{token?}', [AuthController::class, 'PatientAccountActivation']) ->name('patient.account.activation');
 
-//  Patients Forgot & Reset Password
-Route::get('/forgot-password', [PatientPagesController::class, 'ShowForgotPassword']) ->name('forgot.password.page') ->middleware('patient.redirect');
-Route::get('/forgot-password/{id}', [ PatientPagesController::class, 'PatientForgotPassword' ]) ->name('patient.forgot.password') ->middleware('patient.redirect');
-Route::post('/reset-password/{id}', [ PatientProfileController::class, 'PatientForgotUpdate' ]) ->name('patient.forgot.update');
-
-//  Patient Forgot Password Token
-Route::get('/patient_forgot_password/{token?}', [PatientProfileController::class, 'PatientForgotPasswordNotification']) ->name('patient.forgot.password.notify');
-
-
 //  Patient Social Github Login
 Route::get('github-login', [ SocialLoginController::class, 'SendGithubLogin' ]) -> name('github.login');
 Route::get('github-login-system', [ SocialLoginController::class, 'LoginWithGithub' ]);
@@ -67,10 +58,10 @@ Route::get('/doctor-logout', [AuthController::class, 'DoctorLogout']) ->name('do
 //  Doctor Login Notification
 Route::get('/doctor_account_activation/{token?}', [AuthController::class, 'DoctorAccountActivation']) ->name('doctor.account.activation');
 
-//  Doctors Forgot & Reset Password
-Route::get('/forgot-password-page', [DoctorPagesController::class, 'DoctorForgotPage']) ->name('doctor.forgot.page') ->middleware('doctor.redirect');
-Route::get('/doctor-forgot-password/{id}', [ DoctorPagesController::class, 'DoctorForgotPassword' ]) ->name('doctor.forgot.password') ->middleware('doctor.redirect');
-Route::post('/docotr-reset-password/{id}', [ DoctorProfileController::class, 'DoctorForgotUpdate' ]) ->name('doctor.forgot.update');
+//  Forgot Password
+//  Forgot Password
+Route::get('/forgot-password', [ PatientProfileController::class, 'ShowForgotPassword' ] ) -> name('forgot.password.page');
+Route::post('/forgot-password', [ PatientProfileController::class, 'ForgotPassword' ] ) -> name('forgot.password');
 
-//  Patient Forgot Password Token
-Route::get('/doctor_forgot_password/{token?}', [DoctorProfileController::class, 'DoctorForgotPasswordNotification']) ->name('doctor.forgot.password.notify');
+Route::get('/reset-password/{token?}/{email?}', [ PatientProfileController::class, 'ResetPasswordLink' ] ) -> name('reset.password');
+Route::post('/reset-password', [ PatientProfileController::class, 'ResetPassword' ] ) -> name('reset.password');

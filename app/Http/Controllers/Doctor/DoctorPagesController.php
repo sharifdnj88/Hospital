@@ -32,23 +32,6 @@ class DoctorPagesController extends Controller
         return view('doctor.password');
     }
 
-     // Patient Forgot Password Page Show
-     public function DoctorForgotPage()
-     {
-         $doctors = doctor::latest() -> first();
-         return view('doctor.forgot', [
-             'doctors' => $doctors
-         ] );
-     }
- 
-     // Patient Reset Password Page Show
-     public function DoctorForgotPassword($id)
-     {
-         $doctor_password = doctor::findOrFail($id);
-         return view('doctor.reset', [
-             'doctor_password'     =>$doctor_password
-         ]);
-     }
-
+     
 
 }

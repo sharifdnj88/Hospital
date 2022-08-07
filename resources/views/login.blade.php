@@ -32,10 +32,8 @@
 													<input id="show_pass" type="checkbox"> Show Password
 												</label>
 											</div>
-											<div class="text-right">
-												<p class="text-danger my-2">Forgot Password</p>
-												<a class="forgot-link" href="{{route('forgot.password.page')}}">Patient</a> OR
-												<a class="forgot-link" href="{{route('doctor.forgot.page')}}">Doctor</a>
+											<div class="text-right my-3">
+												<a href="{{route('forgot.password.page')}}">Forgot Password</a>
 											</div>
 											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Login</button>
 											<div class="login-or">

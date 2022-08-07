@@ -11,6 +11,7 @@ class DoctorForgotPasswordNotification extends Notification
 {
     use Queueable;
     private $token;
+    private $email;
 
     /**
      * Create a new notification instance.
@@ -19,6 +20,7 @@ class DoctorForgotPasswordNotification extends Notification
      */
     public function __construct($doctor)
     {
+        $this -> email = $doctor -> email;
         $this -> token = $doctor -> access_token;
     }
 
@@ -43,7 +45,7 @@ class DoctorForgotPasswordNotification extends Notification
     {
         return (new MailMessage)
                 ->line('The introduction to the notification.')
-                ->action('Reset Password', url('/doctor_forgot_password/'. $this -> token))
+                ->action('Reset Password', url('/reset-password/' . $this -> token . '/' . $this -> email))
                 ->line('Thank you for using our application!');
     }
 

@@ -133,7 +133,7 @@ class AuthController extends Controller
  public function logout()
  {
      Auth::guard('patient') -> logout();
-     return redirect() -> route('login.page') -> with('success',  'Thank you for staying with us');
+     return redirect() -> route('login.page') -> with('success',  'Thanks for staying with us');
  }
 
 
@@ -210,7 +210,7 @@ class AuthController extends Controller
  public function DoctorLogout()
  {
      Auth::guard('doctor') -> logout();
-     return redirect() -> route('login.page') -> with('success',  'Thank you for staying with us');
+     return redirect() -> route('login.page') -> with('info',  'Thanks for staying with us');
  }
 
 

@@ -1,66 +1,58 @@
 @extends('layouts/app')
+@section('title', 'Forgot Passwprd')
 
 @section('main')
-    <!-- Main Wrapper -->
-		<div class="main-wrapper">
-		
-			
-			
-			<!-- Page Content -->
-			<div class="content">
-				<div class="container-fluid">
-					
-					<div class="row">
-						<div class="col-md-8 offset-md-2">
-							
-							<!-- Account Content -->
-							<div class="account-content">
-								<div class="row align-items-center justify-content-center">
-									<div class="col-md-7 col-lg-6 login-left">
-										<img src="{{asset('assets/img/login-banner.png')}}" class="img-fluid" alt="Login Banner">	
-									</div>
-									<div class="col-md-12 col-lg-6 login-right">
-										<div class="login-header">
-											<h3>Forgot Password?</h3>
-											<p class="small text-muted">Enter your email to get a password reset link</p>
-										</div>
-										@include('validate')
-										<!-- Forgot Password Form -->
-										<form action="{{route('patient.forgot.update', $patient_password -> id)}}" method="POST">
-                                            @csrf
-											<div class="form-group form-focus">
-												<input name="email" type="email" class="form-control floating">
-												<label class="focus-label">Email</label>
-											</div>
-											<div class="form-group form-focus">
-												<input name="password" type="password" class="form-control floating">
-												<label class="focus-label">New Password</label>
-											</div>
-											<div class="form-group form-focus">
-												<input name="password_confirmation" type="password" class="form-control floating">
-												<label class="focus-label">Confirm Password</label>
-											</div>
-											<div class="text-right">
-												<a class="forgot-link" href="">Remember your password?</a>
-											</div>
-											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Reset Password</button>
-										</form>
-										<!-- /Forgot Password Form -->
-										
-									</div>
-								</div>
-							</div>
-							<!-- /Account Content -->
-							
-						</div>
-					</div>
 
-				</div>
+<!-- Page Content -->
+<div class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                
+                <!-- Account Content -->
+                <div class="account-content">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-7 col-lg-6 login-left">
+                            <img src="{{asset('assets/img/login-banner.png')}}" class="img-fluid" alt="Login Banner">	
+                        </div>
+                        <div class="col-md-12 col-lg-6 login-right">
+                            <div class="login-header text-center">
+                                <h3>Reset Password?</h3>
+                                <p class="small text-muted">Change your Password</p>
+                            </div>
+                            @include('validate')
+                            <!-- Forgot Password Form -->
+                            <form action="{{route('reset.password')}}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <input name="email" class="form-control" value="{{ $email }}" type="email" Readonly >
+                                </div>
+                                <div class="form-group">
+                                    {{-- <input name="email" class="form-control" value="{{ $email }}" type="hidden"> --}}
+                                    <input name="password" class="form-control" type="password" placeholder="New Password">
+                                </div>
+                                <div class="form-group">
+                                    <input name="password_confirmation" class="form-control" type="password" placeholder="Confirm Password">
+                                </div>
+                                <div class="form-group mb-0">
+                                    <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
+                                </div>
+                            </form>
+                            <!-- /Forgot Password Form -->
+                            <div class="text-center dont-have">Remember your password? <a href="{{route('login.page')}}">Login</a></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Account Content -->
+                
+            </div>
+        </div>
 
-			</div>		
-			<!-- /Page Content -->
-   
-					   
-		</div>
-		<!-- /Main Wrapper -->
+    </div>
+
+</div>		
+<!-- /Page Content -->
+
+
 @endsection

@@ -15,3 +15,12 @@
 @if( Session::has('danger') )
 <p class="alert alert-danger">{{ Session::get('danger') }}<button class="close" data-dismiss="alert">&times;</button></p>
 @endif
+
+
+@if( Session::has('info') )
+<p class="alert alert-info">{{ Session::get('info') }}<button class="close" data-dismiss="alert">&times;</button></p>
+@endif
+
+@if( Session::has('primary') )
+<p class="alert alert-primary">{{ Session::get('primary') }}<button class="close" data-dismiss="alert">&times;</button></p>
+@endif

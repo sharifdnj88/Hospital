@@ -36,25 +36,6 @@ class PatientPagesController extends Controller
         return view('patient.password');
     }
 
-    // Patient Forgot Password Page Show
-    public function ShowForgotPassword()
-    {
-            $patients = patient::latest() -> first();
-            return view('patient.forgot', [
-            'patients' => $patients
-            ] );          
-
-        
-    }
-
-    // Patient Reset Password Page Show
-    public function PatientForgotPassword($id)
-    {
-        $patient_password = patient::findOrFail($id);
-        return view('patient.reset', [
-            'patient_password'     =>$patient_password
-        ]);
-    }
-
+    
 
 }
