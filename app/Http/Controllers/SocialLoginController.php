@@ -28,11 +28,9 @@ class SocialLoginController extends Controller
              return redirect('/patient-dashboard');
          }else{
              $patient = patient::create([
-                 'name'            =>  $user -> name,
-                 'email'            =>  $user -> email,
-                 'facebook_id'     =>   $user -> id,
-                 'status'            =>   true,
-                 'access_token'    => null,
+                'name'               =>  $user -> name,
+                'facebook_id'       => $user -> id,
+                'status'               =>true,
              ]);
  
              Auth::guard('patient') -> login($patient);
@@ -62,11 +60,9 @@ class SocialLoginController extends Controller
              return redirect('/patient-dashboard');
          }else{
              $patient = patient::create([
-                 'name'            =>  $user -> name,
-                 'email'            =>  $user -> email,
-                 'github_id'        =>   $user -> id,
-                 'status'            =>   true,
-                 'access_token'    => null,
+                'name'               =>  $user -> name,
+                'facebook_id'       => $user -> id,
+                'status'               =>true,
              ]);
  
              Auth::guard('patient') -> login($patient);
@@ -94,11 +90,9 @@ class SocialLoginController extends Controller
              return redirect('/patient-dashboard');
          }else{
              $patient = patient::create([
-                 'name'            =>  $user -> name,
-                 'email'            =>  $user -> email,
-                 'google_id'        =>   $user -> id,
-                 'status'            =>   true,
-                 'access_token'    => null,
+                'name'               =>  $user -> name,
+                'facebook_id'       => $user -> id,
+                'status'               =>true,
              ]);
  
              Auth::guard('patient') -> login($patient);
