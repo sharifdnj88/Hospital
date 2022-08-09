@@ -61,7 +61,7 @@ class SocialLoginController extends Controller
          }else{
              $patient = patient::create([
                 'name'               =>  $user -> name,
-                'facebook_id'       => $user -> id,
+                'github_id'           => $user -> id,
                 'status'               =>true,
              ]);
  
@@ -91,7 +91,7 @@ class SocialLoginController extends Controller
          }else{
              $patient = patient::create([
                 'name'               =>  $user -> name,
-                'facebook_id'       => $user -> id,
+                'google_id'       => $user -> id,
                 'status'               =>true,
              ]);
  
